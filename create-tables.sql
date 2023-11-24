@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS role
 CREATE TABLE IF NOT EXISTS "user"
 (
     id       INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    role_id  INTEGER REFERENCES role (id),
+    role_id  INTEGER             REFERENCES role (id) ON DELETE SET NULL,
     email    VARCHAR(255) UNIQUE NOT NULL,
     password VARCHAR(255)        NOT NULL,
     CHECK (email ~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+\.[A-Za-z]{2,}$')
@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS class_type
 CREATE TABLE IF NOT EXISTS teacher
 (
     id         INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    user_id    INTEGER REFERENCES "user" (id),
+    user_id    INTEGER     REFERENCES "user" (id) ON DELETE SET NULL,
     first_name VARCHAR(50) NOT NULL,
     last_name  VARCHAR(50) NOT NULL,
     patronymic VARCHAR(50)
@@ -52,18 +52,18 @@ CREATE TABLE IF NOT EXISTS teacher
 
 CREATE TABLE IF NOT EXISTS teacher_subject
 (
-    teacher_id INTEGER REFERENCES teacher (id),
-    subject_id INTEGER REFERENCES subject (id),
+    teacher_id INTEGER REFERENCES teacher (id) ON DELETE CASCADE,
+    subject_id INTEGER REFERENCES subject (id) ON DELETE SET NULL,
     PRIMARY KEY (teacher_id, subject_id)
 );
 
 CREATE TABLE IF NOT EXISTS class
 (
     id           INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    classroom_id INTEGER REFERENCES classroom (id),
-    teacher_id   INTEGER REFERENCES teacher (id),
-    subject_id   INTEGER REFERENCES subject (id),
-    type_id      INTEGER REFERENCES class_type (id),
+    classroom_id INTEGER                   REFERENCES classroom (id) ON DELETE SET NULL,
+    teacher_id   INTEGER                   REFERENCES teacher (id) ON DELETE SET NULL,
+    subject_id   INTEGER                   REFERENCES subject (id) ON DELETE SET NULL,
+    type_id      INTEGER                   REFERENCES class_type (id) ON DELETE SET NULL,
     start_time   TIME(0) WITHOUT TIME ZONE NOT NULL,
     end_time     TIME(0) WITHOUT TIME ZONE NOT NULL,
     comment      VARCHAR(255)              NULL,
@@ -73,8 +73,8 @@ CREATE TABLE IF NOT EXISTS class
 
 CREATE TABLE IF NOT EXISTS class_group
 (
-    class_id INTEGER REFERENCES class (id),
-    group_id INTEGER REFERENCES class (id),
+    class_id INTEGER REFERENCES class (id) ON DELETE CASCADE,
+    group_id INTEGER REFERENCES class (id) ON DELETE CASCADE,
     PRIMARY KEY (class_id, group_id)
 );
 
@@ -83,13 +83,13 @@ CREATE TABLE IF NOT EXISTS "group"
     id         INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     number     INTEGER NOT NULL,
     course     SMALLINT CHECK (course >= 1 AND course <= 6),
-    faculty_id INTEGER REFERENCES faculty (id)
+    faculty_id INTEGER REFERENCES faculty (id) ON DELETE SET NULL
 );
 
 CREATE TABLE IF NOT EXISTS schedule
 (
     id       INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    group_id INTEGER REFERENCES "group" (id),
+    group_id INTEGER REFERENCES "group" (id) ON DELETE CASCADE,
     start    DATE NOT NULL,
     "end"    DATE NOT NULL
 );
@@ -97,7 +97,8 @@ CREATE TABLE IF NOT EXISTS schedule
 CREATE TABLE IF NOT EXISTS logging
 (
     id          INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    user_id     INTEGER REFERENCES "user" (id),
     action_time TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL,
-    action      VARCHAR(255)                   NOT NULL
+    action      VARCHAR(255)                   NOT NULL,
+    old_data    JSONB,
+    new_data    JSONB
 );

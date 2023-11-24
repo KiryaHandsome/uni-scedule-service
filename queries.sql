@@ -62,16 +62,21 @@ WHERE cr.id = ?;
 
 DELETE
 FROM teacher
-WHERE teacher.id = ?;
+WHERE teacher.id = 1;
 
 DELETE
 FROM subject
 WHERE subject.id = ?;
 
 -- Обновление/Добавление комментария к занятию
-UPDATE class cl
-SET comment = ?
-WHERE cl.id = ?;
+UPDATE teacher
+SET first_name = 'Slava'
+WHERE id = 2;
+
+INSERT INTO class (classroom_id, teacher_id, subject_id, type_id, start_time, comment, week_numbers,
+                   day_of_week)
+VALUES
+    (5, 1, 4, 1, '19:00:00', NULL, ARRAY [2], 1);
 
 explain
 select *
@@ -85,7 +90,8 @@ order by t.patronymic desc
 limit 4 offset 2
 ;
 
-explain analyse select t.last_name, g.number, s.name
+explain analyse
+select t.last_name, g.number, s.name
 from teacher t
          join class c on c.teacher_id = t.id
          join class_group cg on cg.class_id = c.id
