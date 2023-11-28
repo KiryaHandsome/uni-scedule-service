@@ -152,7 +152,7 @@ VALUES (1, '2023-09-01', '2023-12-15');
 
 
 INSERT INTO class(classroom_id, teacher_id, subject_id, type_id, start_time, comment, week_numbers, day_of_week)
-        values (5, 1, 4, 1, '19:00:00', NULL, ARRAY [2], 1);
+values (5, 1, 4, 1, '19:00:00', NULL, ARRAY [2], 1);
 
 
 

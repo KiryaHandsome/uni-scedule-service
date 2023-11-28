@@ -25,7 +25,7 @@ Project for university schedule
     * Create and delete subjects
     * Create and delete teachers
     * Create and delete classes
- 
+
 ## Database diagram
 
 ![](https://gist.githubusercontent.com/KiryaHandsome/6e774d564c034c506844f6b4391d4328/raw/4f078ac75e799c906476c4b6c947fdbff246e343/db_diagram.png)
