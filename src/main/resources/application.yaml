@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/uni_schedule
+    username: postgres
+    password: postgres
+
+secret:
+  key: hmjBzVJJ9epCnV7sYaL2hgrgsCMluQIO8osh/zThBl3iOAf0jfwdDU5dxFGfEgfd
+  issuer: modsen
+  expiration: 1800000 # 30 minutes

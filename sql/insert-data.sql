@@ -3,8 +3,8 @@ VALUES ('Admin'),
        ('User');
 
 INSERT INTO "user" (role_id, email, password)
-VALUES (1, 'admin@example.com', 'admin_password'),
-       (2, 'user@example.com', 'user_password');
+VALUES (1, 'admin@example.com', '$2a$10$drkkm7OJjOH91y5WSOxtvu4mHFR0m5Kc8Uh8mQUX5ULq4lndnWVfu'), -- Pass123$
+       (2, 'user@example.com', '$2a$10$drkkm7OJjOH91y5WSOxtvu4mHFR0m5Kc8Uh8mQUX5ULq4lndnWVfu');  -- Pass123$
 
 INSERT INTO subject (name, short_name)
 VALUES ('Архитектура вычислительных систем', 'АВС'),

@@ -35,12 +35,6 @@ CREATE TRIGGER log_subject
     FOR EACH ROW
 EXECUTE FUNCTION log_action();
 
-CREATE TRIGGER log_subject
-    AFTER INSERT OR UPDATE OR DELETE
-    ON subject
-    FOR EACH ROW
-EXECUTE FUNCTION log_action();
-
 CREATE OR REPLACE FUNCTION set_class_end_time()
     RETURNS TRIGGER
     LANGUAGE plpgsql
