@@ -167,3 +167,16 @@ from teacher t
          join "group" g on g.id = cg.group_id
          join subject s on s.id = c.subject_id;
 
+select
+    id as class_id,
+    classroom_id,
+    teacher_id,
+    subject_id,
+    type_id,
+    start_time,
+    end_time,
+    comment,
+    week_numbers,
+    day_of_week
+from class
+where id = ?;

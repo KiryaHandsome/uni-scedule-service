@@ -3,6 +3,7 @@ package by.bsuir.schedule.controller;
 import by.bsuir.schedule.dto.ClassRequest;
 import by.bsuir.schedule.exception.RestException;
 import by.bsuir.schedule.model.Class;
+import by.bsuir.schedule.model.User;
 import by.bsuir.schedule.service.ClassDao;
 import by.bsuir.schedule.service.UserDao;
 import by.bsuir.schedule.service.UserService;
@@ -44,7 +45,8 @@ public class ClassController {
                             @RequestBody ClassRequest request) {
         String username = userDetails.getUsername();
         Class updateableClass = classDao.findById(id);
-        if(!Objects.equals(updateableClass.getTeacher().getUserId(), userDao.findByEmail(username).getId())) {
+        User user = userDao.findByEmail(username);
+        if(!Objects.equals(updateableClass.getTeacher().getUserId(), user.getId())) {
             throw new RestException("Teacher hasn't access to edit this class", HttpStatus.FORBIDDEN);
         }
         classDao.update(id, request);

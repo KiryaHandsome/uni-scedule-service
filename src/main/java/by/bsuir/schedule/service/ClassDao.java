@@ -40,17 +40,12 @@ public class ClassDao {
             pss.setTime(5, request.getStartTime());
             pss.setTime(6, request.getEndTime());
             pss.setString(7, request.getComment());
-//            pss.setArray(8, Array request.getWeekNumbers());
             pss.setInt(9, request.getDayOfWeek());
         });
     }
 
     public Class findById(int id) {
-        String sql = """
-                select *
-                from class
-                where id = ?;
-                """;
+        String sql = Queries.SELECT_CLASSES + "\nwhere class_id=?;";
         List<Class> result = jdbcTemplate.query(sql, new Object[]{id}, new ClassMapper());
         if (result.isEmpty()) {
             throw new RestException(
@@ -82,7 +77,7 @@ public class ClassDao {
                   start_time = ?,
                   end_time = ?,
                   comment = ?,
-                  week_numbers = ?, -- assuming this is a column that can store a list (array)
+                  week_numbers = ?,
                   day_of_week = ?
                 WHERE
                   id = ?;
@@ -95,7 +90,6 @@ public class ClassDao {
             pss.setTime(5, request.getStartTime());
             pss.setTime(6, request.getEndTime());
             pss.setString(7, request.getComment());
-//            pss.setArray(8, request.getWeekNumbers());
             pss.setInt(9, request.getDayOfWeek());
             pss.setInt(10, id);
         });

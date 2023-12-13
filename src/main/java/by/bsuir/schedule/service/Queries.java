@@ -13,6 +13,7 @@ public interface Queries {
                             cl.day_of_week as day_of_week,
                             cl.week_numbers,
                             t.id           as teacher_id,
+                            t.user_id      as teacher_user_id,
                             t.first_name   as teacher_first_name,
                             t.last_name    as teacher_last_name,
                             t.patronymic   as teacher_patronymic,
